@@ -16,18 +16,29 @@ class WordCount {
   }
 
   Iterable<String> _splitWords(String phrase) sync* {
-    StringBuffer buffer = StringBuffer();
+    var buffer = StringBuffer();
+    List<int> codeUnits = phrase.codeUnits;
+    int? lastChar;
 
-    for (var char in phrase.codeUnits) {
+    for (int i = 0; i < codeUnits.length; i++) {
+      int char = codeUnits[i];
+
       if (_isDigit(char) || _isLetter(char)) {
+        if (_isApostrophe(char) &&
+            (!_isLetter(lastChar ?? 0) || i == codeUnits.length - 1)) {
+          continue;
+        }
+
         buffer.write(String.fromCharCode(char));
-      } else if (_isWhitespace(char)) {
-        yield buffer.toString();
+      } else if (buffer.isNotEmpty) {
+        yield buffer.toString().toLowerCase();
         buffer.clear();
       }
+
+      lastChar = char;
     }
 
-    if (buffer.isNotEmpty) yield buffer.toString();
+    if (buffer.isNotEmpty) yield buffer.toString().toLowerCase();
   }
 
   bool _isDigit(int char) {
@@ -37,10 +48,10 @@ class WordCount {
   bool _isLetter(int char) {
     return (char >= 65 && char <= 90) ||
         (char >= 97 && char <= 122) ||
-        char == 39;
+        _isApostrophe(char);
   }
 
-  bool _isWhitespace(int char) {
-    return char == 9 || char == 10 || char == 32;
+  bool _isApostrophe(int char) {
+    return char == 39;
   }
 }

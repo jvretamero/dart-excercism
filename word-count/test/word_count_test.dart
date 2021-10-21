@@ -35,12 +35,12 @@ void ignoreSpecialCharacters() {
   test('handles cramped lists', () {
     final Map<String, int> result = wordCount.countWords('one,two,three');
     expect(result, equals(<String, int>{'one': 1, 'two': 1, 'three': 1}));
-  }, skip: true);
+  }, skip: false);
 
   test('handles expanded lists', () {
     final Map<String, int> result = wordCount.countWords('one,\ntwo,\nthree');
     expect(result, equals(<String, int>{'one': 1, 'two': 1, 'three': 1}));
-  }, skip: true);
+  }, skip: false);
 
   test('ignore punctuation', () {
     final Map<String, int> result =
@@ -77,14 +77,14 @@ void notJustWords() {
     final Map<String, int> result =
         wordCount.countWords('testing, 1, 2 testing');
     expect(result, equals(<String, int>{'testing': 2, '1': 1, '2': 1}));
-  }, skip: true);
+  }, skip: false);
 }
 
 void edgeCases() {
   test('normalize case', () {
     final Map<String, int> result = wordCount.countWords('go Go GO Stop stop');
     expect(result, equals(<String, int>{'go': 3, 'stop': 2}));
-  }, skip: true);
+  }, skip: false);
 
   test('with apostrophes', () {
     final Map<String, int> result =
@@ -98,7 +98,7 @@ void edgeCases() {
           'then': 1,
           'cry': 1
         }));
-  }, skip: true);
+  }, skip: false);
 
   test('substrings from the beginning', () {
     final Map<String, int> result =
@@ -115,17 +115,17 @@ void edgeCases() {
           'and': 1,
           'a': 1
         }));
-  }, skip: true);
+  }, skip: false);
 
   test('multiple spaces not detected as a word', () {
     final Map<String, int> result =
         wordCount.countWords(' multiple   whitespaces');
     expect(result, equals(<String, int>{'multiple': 1, 'whitespaces': 1}));
-  }, skip: true);
+  }, skip: false);
 
   test('alternating word separators not detected as a word', () {
     final Map<String, int> result =
         wordCount.countWords(',\n,one,\n ,two \n \'three\'');
     expect(result, equals(<String, int>{'one': 1, 'two': 1, 'three': 1}));
-  }, skip: true);
+  }, skip: false);
 }
