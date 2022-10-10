@@ -23,6 +23,9 @@ class Forth {
         case 'dup':
           _duplicate();
           break;
+        case 'drop':
+          _pop();
+          break;
         default:
           _pushNumber(token);
       }

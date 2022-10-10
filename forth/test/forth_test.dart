@@ -127,16 +127,16 @@ void main() {
       test('removes the top value on the stack if it is the only one', () {
         forth.evaluate('1 drop');
         expect(forth.stack, equals(<int>[]));
-      }, skip: true);
+      });
 
       test('removes the top value on the stack if it is not the only one', () {
         forth.evaluate('1 2 drop');
         expect(forth.stack, equals([1]));
-      }, skip: true);
+      });
 
       test('errors if there is nothing on the stack', () {
         expect(() => forth.evaluate('drop'), throwsEmptyStack);
-      }, skip: true);
+      });
     });
 
     group('swap', () {
