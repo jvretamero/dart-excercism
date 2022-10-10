@@ -187,32 +187,32 @@ void main() {
         forth.evaluate(': dup-twice dup dup ;');
         forth.evaluate('1 dup-twice');
         expect(forth.stack, equals([1, 1, 1]));
-      }, skip: true);
+      });
 
       test('execute in the right order', () {
         forth.evaluate(': countup 1 2 3 ;');
         forth.evaluate('countup');
         expect(forth.stack, equals([1, 2, 3]));
-      }, skip: true);
+      });
 
       test('can override other user-defined words', () {
         forth.evaluate(': foo dup ;');
         forth.evaluate(': foo dup dup ;');
         forth.evaluate('1 foo');
         expect(forth.stack, equals([1, 1, 1]));
-      }, skip: true);
+      });
 
       test('can override built-in words', () {
         forth.evaluate(': swap dup ;');
         forth.evaluate('1 swap');
         expect(forth.stack, equals([1, 1]));
-      }, skip: true);
+      });
 
       test('can override built-in operators', () {
         forth.evaluate(': + * ;');
         forth.evaluate('3 4 +');
         expect(forth.stack, equals([12]));
-      }, skip: true);
+      });
 
       test('can use different words with the same name', () {
         forth.evaluate(': foo 5 ;');
@@ -235,7 +235,7 @@ void main() {
           throwsA(isA<Exception>().having(
               (e) => e.toString(), 'message', 'Exception: Invalid definition')),
         );
-      }, skip: true);
+      });
 
       test('cannot redefine negative numbers', () {
         expect(

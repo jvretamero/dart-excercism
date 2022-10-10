@@ -1,40 +1,66 @@
+import 'defined_word.dart';
+import 'parser.dart';
+
 class Forth {
   List<int> get stack => List.unmodifiable(_stack);
 
   List<int> _stack = <int>[];
+  Map<String, DefinedWord> _words = {};
 
   void evaluate(String expression) {
-    List<String> tokens = expression.split(' ');
+    Parser parser = Parser(expression);
 
-    for (String token in tokens) {
-      switch (token) {
-        case '+':
-          _add();
-          break;
-        case '-':
-          _subtract();
-          break;
-        case '*':
-          _multiply();
-          break;
-        case '/':
-          _divide();
-          break;
-        case 'dup':
-          _duplicate();
-          break;
-        case 'drop':
-          _pop();
-          break;
-        case 'swap':
-          _swap();
-          break;
-        case 'over':
-          _over();
-          break;
-        default:
-          _pushNumber(token);
-      }
+    while (parser.hasTokens) {
+      String token = parser.nextToken();
+
+      _evaluateToken(parser, token);
+    }
+  }
+
+  void _evaluateToken(Parser parser, String token) {
+    if (_isDefinedWord(token)) {
+      _evaluateWord(parser, token);
+      return;
+    }
+
+    switch (token) {
+      case '+':
+        _add();
+        break;
+      case '-':
+        _subtract();
+        break;
+      case '*':
+        _multiply();
+        break;
+      case '/':
+        _divide();
+        break;
+      case 'dup':
+        _duplicate();
+        break;
+      case 'drop':
+        _pop();
+        break;
+      case 'swap':
+        _swap();
+        break;
+      case 'over':
+        _over();
+        break;
+      case ':':
+        _wordDefinition(parser);
+        break;
+      default:
+        _pushNumber(token);
+    }
+  }
+
+  void _evaluateWord(Parser parser, String token) {
+    DefinedWord definedWord = _words[token]!;
+
+    for (String wordToken in definedWord.tokens) {
+      _evaluateToken(parser, wordToken);
     }
   }
 
@@ -112,5 +138,29 @@ class Forth {
 
     _push(top);
     _push(over);
+  }
+
+  bool _isDefinedWord(String token) => _words.containsKey(token);
+
+  void _wordDefinition(Parser parser) {
+    String word = parser.nextToken();
+    List<String> tokens = _getWordTokens(parser);
+
+    DefinedWord definedWord = DefinedWord(word, tokens);
+    _words[word] = definedWord;
+  }
+
+  List<String> _getWordTokens(Parser parser) {
+    List<String> tokens = <String>[];
+
+    while (parser.peekToken() != ';') {
+      String token = parser.nextToken();
+      tokens.add(token);
+    }
+
+    // Consume the ";" token
+    parser.nextToken();
+
+    return tokens;
   }
 }
