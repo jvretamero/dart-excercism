@@ -26,15 +26,15 @@ void main() {
       test('can add two numbers', () {
         forth.evaluate('1 2 +');
         expect(forth.stack, equals([3]));
-      }, skip: true);
+      });
 
       test('errors if there is nothing on the stack', () {
         expect(() => forth.evaluate('+'), throwsEmptyStack);
-      }, skip: true);
+      });
 
       test('errors if there is only one value on the stack', () {
         expect(() => forth.evaluate('1 +'), throwsEmptyStack);
-      }, skip: true);
+      });
     });
 
     group('subtraction', () {
