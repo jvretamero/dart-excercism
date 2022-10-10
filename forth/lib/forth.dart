@@ -7,18 +7,18 @@ class Forth {
     List<String> tokens = expression.split(' ');
 
     for (String token in tokens) {
-      if (_isOperand(token)) {
-        if (token == '+') {
+      switch (token) {
+        case '+':
           _add();
-        }
-      } else {
-        int number = int.parse(token);
-        _push(number);
+          break;
+        case '-':
+          _subtract();
+          break;
+        default:
+          _pushNumber(token);
       }
     }
   }
-
-  bool _isOperand(String token) => token == '+';
 
   int _pop() {
     if (_stack.isEmpty) throw Exception('Stack empty');
@@ -28,10 +28,22 @@ class Forth {
 
   void _push(int number) => _stack.add(number);
 
+  void _pushNumber(String token) {
+    int number = int.parse(token);
+    _push(number);
+  }
+
   void _add() {
-    int left = _pop();
     int right = _pop();
+    int left = _pop();
 
     _push(left + right);
+  }
+
+  void _subtract() {
+    int right = _pop();
+    int left = _pop();
+
+    _push(left - right);
   }
 }
