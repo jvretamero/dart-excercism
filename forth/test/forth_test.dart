@@ -99,12 +99,12 @@ void main() {
       test('addition and subtraction', () {
         forth.evaluate('1 2 + 4 -');
         expect(forth.stack, equals([-1]));
-      }, skip: true);
+      });
 
       test('multiplication and division', () {
         forth.evaluate('2 4 * 3 /');
         expect(forth.stack, equals([2]));
-      }, skip: true);
+      });
     });
 
     group('dup', () {
