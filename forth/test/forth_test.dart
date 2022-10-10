@@ -71,12 +71,12 @@ void main() {
       test('can divide two numbers', () {
         forth.evaluate('12 3 /');
         expect(forth.stack, equals([4]));
-      }, skip: true);
+      });
 
       test('performs integer division', () {
         forth.evaluate('8 3 /');
         expect(forth.stack, equals([2]));
-      }, skip: true);
+      });
 
       test('errors if dividing by zero', () {
         expect(
@@ -84,15 +84,15 @@ void main() {
           throwsA(isA<Exception>().having(
               (e) => e.toString(), 'message', 'Exception: Division by zero')),
         );
-      }, skip: true);
+      });
 
       test('errors if there is nothing on the stack', () {
         expect(() => forth.evaluate('/'), throwsEmptyStack);
-      }, skip: true);
+      });
 
       test('errors if there is only one value on the stack', () {
         expect(() => forth.evaluate('1 /'), throwsEmptyStack);
-      }, skip: true);
+      });
     });
 
     group('combined arithmetic', () {

@@ -17,6 +17,9 @@ class Forth {
         case '*':
           _multiply();
           break;
+        case '/':
+          _divide();
+          break;
         default:
           _pushNumber(token);
       }
@@ -55,5 +58,16 @@ class Forth {
     int left = _pop();
 
     _push(left * right);
+  }
+
+  void _divide() {
+    int right = _pop();
+    int left = _pop();
+
+    try {
+      _push(left ~/ right);
+    } on UnsupportedError {
+      throw Exception('Division by zero');
+    }
   }
 }
