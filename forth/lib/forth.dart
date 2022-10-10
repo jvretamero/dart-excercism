@@ -29,6 +29,9 @@ class Forth {
         case 'swap':
           _swap();
           break;
+        case 'over':
+          _over();
+          break;
         default:
           _pushNumber(token);
       }
@@ -101,5 +104,13 @@ class Forth {
 
     _push(first);
     _push(second);
+  }
+
+  void _over() {
+    int top = _pop();
+    int over = _peek();
+
+    _push(top);
+    _push(over);
   }
 }

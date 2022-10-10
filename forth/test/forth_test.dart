@@ -166,20 +166,20 @@ void main() {
       test('copies the second element if there are only two', () {
         forth.evaluate('1 2 over');
         expect(forth.stack, equals([1, 2, 1]));
-      }, skip: true);
+      });
 
       test('copies the second element if there are more than two', () {
         forth.evaluate('1 2 3 over');
         expect(forth.stack, equals([1, 2, 3, 2]));
-      }, skip: true);
+      });
 
       test('errors if there is nothing on the stack', () {
         expect(() => forth.evaluate('over'), throwsEmptyStack);
-      }, skip: true);
+      });
 
       test('errors if there is only one value on the stack', () {
         expect(() => forth.evaluate('1 over'), throwsEmptyStack);
-      }, skip: true);
+      });
     });
 
     group('user-defined words', () {
