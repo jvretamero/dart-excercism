@@ -56,15 +56,15 @@ void main() {
       test('can multiply two numbers', () {
         forth.evaluate('2 4 *');
         expect(forth.stack, equals([8]));
-      }, skip: true);
+      });
 
       test('errors if there is nothing on the stack', () {
         expect(() => forth.evaluate('*'), throwsEmptyStack);
-      }, skip: true);
+      });
 
       test('errors if there is only one value on the stack', () {
         expect(() => forth.evaluate('1 *'), throwsEmptyStack);
-      }, skip: true);
+      });
     });
 
     group('division', () {

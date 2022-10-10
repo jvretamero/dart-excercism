@@ -14,6 +14,9 @@ class Forth {
         case '-':
           _subtract();
           break;
+        case '*':
+          _multiply();
+          break;
         default:
           _pushNumber(token);
       }
@@ -45,5 +48,12 @@ class Forth {
     int left = _pop();
 
     _push(left - right);
+  }
+
+  void _multiply() {
+    int right = _pop();
+    int left = _pop();
+
+    _push(left * right);
   }
 }
