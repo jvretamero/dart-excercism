@@ -20,16 +20,29 @@ class Forth {
         case '/':
           _divide();
           break;
+        case 'dup':
+          _duplicate();
+          break;
         default:
           _pushNumber(token);
       }
     }
   }
 
-  int _pop() {
-    if (_stack.isEmpty) throw Exception('Stack empty');
+  void _checkEmptyStack() {
+    if (_stack.isEmpty) {
+      throw Exception('Stack empty');
+    }
+  }
 
+  int _pop() {
+    _checkEmptyStack();
     return _stack.removeLast();
+  }
+
+  int _peek() {
+    _checkEmptyStack();
+    return _stack.last;
   }
 
   void _push(int number) => _stack.add(number);
@@ -69,5 +82,10 @@ class Forth {
     } on UnsupportedError {
       throw Exception('Division by zero');
     }
+  }
+
+  void _duplicate() {
+    int top = _peek();
+    _push(top);
   }
 }

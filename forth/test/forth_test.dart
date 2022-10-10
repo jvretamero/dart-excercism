@@ -111,16 +111,16 @@ void main() {
       test('copies a value on the stack', () {
         forth.evaluate('1 dup');
         expect(forth.stack, equals([1, 1]));
-      }, skip: true);
+      });
 
       test('copies the top value on the stack', () {
         forth.evaluate('1 2 dup');
         expect(forth.stack, equals([1, 2, 2]));
-      }, skip: true);
+      });
 
       test('errors if there is nothing on the stack', () {
         expect(() => forth.evaluate('dup'), throwsEmptyStack);
-      }, skip: true);
+      });
     });
 
     group('drop', () {
