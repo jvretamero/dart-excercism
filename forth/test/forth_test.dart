@@ -144,22 +144,22 @@ void main() {
           () {
         forth.evaluate('1 2 swap');
         expect(forth.stack, equals([2, 1]));
-      }, skip: true);
+      });
 
       test(
           'swaps the top two values on the stack if they are not the only ones',
           () {
         forth.evaluate('1 2 3 swap');
         expect(forth.stack, equals([1, 3, 2]));
-      }, skip: true);
+      });
 
       test('errors if there is nothing on the stack', () {
         expect(() => forth.evaluate('swap'), throwsEmptyStack);
-      }, skip: true);
+      });
 
       test('errors if there is only one value on the stack', () {
         expect(() => forth.evaluate('1 swap'), throwsEmptyStack);
-      }, skip: true);
+      });
     });
 
     group('over', () {
