@@ -220,14 +220,14 @@ void main() {
         forth.evaluate(': foo 6 ;');
         forth.evaluate('bar foo');
         expect(forth.stack, equals([5, 6]));
-      }, skip: true);
+      });
 
       test('can define word that uses word with the same name', () {
         forth.evaluate(': foo 10 ;');
         forth.evaluate(': foo foo 1 + ;');
         forth.evaluate('foo');
         expect(forth.stack, equals([11]));
-      }, skip: true);
+      });
 
       test('cannot redefine numbers', () {
         expect(
@@ -243,7 +243,7 @@ void main() {
           throwsA(isA<Exception>().having(
               (e) => e.toString(), 'message', 'Exception: Invalid definition')),
         );
-      }, skip: true);
+      });
 
       test('errors if executing a non-existent word', () {
         expect(
@@ -251,7 +251,7 @@ void main() {
           throwsA(isA<Exception>().having(
               (e) => e.toString(), 'message', 'Exception: Unknown command')),
         );
-      }, skip: true);
+      });
 
       test('only defines locally', () {
         final first = Forth();
@@ -261,7 +261,7 @@ void main() {
         second.evaluate('1 1 +');
         expect(first.stack, equals([0]));
         expect(second.stack, equals([2]));
-      }, skip: true);
+      });
     });
 
     group('case-insensitivity', () {

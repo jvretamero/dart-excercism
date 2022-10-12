@@ -52,16 +52,27 @@ class Forth {
         _wordDefinition(parser);
         break;
       default:
+        if (!_isNumber(token)) {
+          throw Exception('Unknown command');
+        }
+
         _pushNumber(token);
+    }
+  }
+
+  void _evaluateDefinedWord(Parser parser, DefinedWord word) {
+    if (word.hasTokens) {
+      for (DefinedWord wordToken in word.tokens) {
+        _evaluateDefinedWord(parser, wordToken);
+      }
+    } else {
+      _evaluateToken(parser, word.name);
     }
   }
 
   void _evaluateWord(Parser parser, String token) {
     DefinedWord definedWord = _words[token]!;
-
-    for (String wordToken in definedWord.tokens) {
-      _evaluateToken(parser, wordToken);
-    }
+    _evaluateDefinedWord(parser, definedWord);
   }
 
   void _checkEmptyStack() {
@@ -144,18 +155,33 @@ class Forth {
 
   void _wordDefinition(Parser parser) {
     String word = parser.nextToken();
-    List<String> tokens = _getWordTokens(parser);
+
+    if (_isNumber(word)) {
+      throw Exception('Invalid definition');
+    }
+
+    List<DefinedWord> tokens = _getWordTokens(parser);
 
     DefinedWord definedWord = DefinedWord(word, tokens);
     _words[word] = definedWord;
   }
 
-  List<String> _getWordTokens(Parser parser) {
-    List<String> tokens = <String>[];
+  bool _isNumber(String token) => int.tryParse(token) != null;
+
+  List<DefinedWord> _getWordTokens(Parser parser) {
+    List<DefinedWord> tokens = <DefinedWord>[];
 
     while (parser.peekToken() != ';') {
       String token = parser.nextToken();
-      tokens.add(token);
+
+      if (_isDefinedWord(token)) {
+        // Store the tokens defined by the word because they can be
+        // overrided later
+        DefinedWord word = _words[token]!;
+        tokens.add(DefinedWord(token, word.tokens));
+      } else {
+        tokens.add(DefinedWord.token(token));
+      }
     }
 
     // Consume the ";" token
