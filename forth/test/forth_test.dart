@@ -268,34 +268,34 @@ void main() {
       test('DUP is case-insensitive', () {
         forth.evaluate('1 DUP Dup dup');
         expect(forth.stack, equals([1, 1, 1, 1]));
-      }, skip: true);
+      });
 
       test('DROP is case-insensitive', () {
         forth.evaluate('1 2 3 4 DROP Drop drop');
         expect(forth.stack, equals([1]));
-      }, skip: true);
+      });
 
       test('SWAP is case-insensitive', () {
         forth.evaluate('1 2 SWAP 3 Swap 4 swap');
         expect(forth.stack, equals([2, 3, 4, 1]));
-      }, skip: true);
+      });
 
       test('OVER is case-insensitive', () {
         forth.evaluate('1 2 OVER Over over');
         expect(forth.stack, equals([1, 2, 1, 2, 1]));
-      }, skip: true);
+      });
 
       test('user-defined words are case-insensitive', () {
         forth.evaluate(': foo dup ;');
         forth.evaluate('1 FOO Foo foo');
         expect(forth.stack, equals([1, 1, 1, 1]));
-      }, skip: true);
+      });
 
       test('definitions are case-insensitive', () {
         forth.evaluate(': SWAP DUP Dup dup ;');
         forth.evaluate('1 swap');
         expect(forth.stack, equals([1, 1, 1, 1]));
-      }, skip: true);
+      });
     });
   });
 }

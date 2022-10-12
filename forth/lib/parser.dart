@@ -2,7 +2,7 @@ class Parser {
   late List<String> _tokens;
 
   Parser(String expression) {
-    _tokens = expression.split(' ');
+    _tokens = expression.toLowerCase().split(' ');
   }
 
   bool get hasTokens => _tokens.length > 0;
