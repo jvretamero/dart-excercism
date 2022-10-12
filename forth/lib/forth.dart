@@ -1,5 +1,28 @@
-import 'defined_word.dart';
-import 'parser.dart';
+class Parser {
+  late List<String> _tokens;
+
+  Parser(String expression) {
+    _tokens = expression.toLowerCase().split(' ');
+  }
+
+  bool get hasTokens => _tokens.length > 0;
+
+  String nextToken() => _tokens.removeAt(0);
+
+  String peekToken() => _tokens.elementAt(0);
+}
+
+class DefinedWord {
+  final String name;
+  final List<DefinedWord> tokens;
+  bool get hasTokens => tokens.length > 0;
+
+  DefinedWord(this.name, this.tokens);
+
+  factory DefinedWord.token(String name) {
+    return DefinedWord(name, <DefinedWord>[]);
+  }
+}
 
 class Forth {
   List<int> get stack => List.unmodifiable(_stack);
