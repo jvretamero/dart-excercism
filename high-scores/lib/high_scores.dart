@@ -1,30 +1,17 @@
 class HighScores {
-  final List<int> scores;
+  late List<int> scores;
+  late List<int> _sortedScores;
 
-  HighScores(this.scores);
+  HighScores(List<int> scores) {
+    this.scores = scores;
+
+    _sortedScores = List.from(scores);
+    _sortedScores.sort();
+  }
 
   int latest() => scores.last;
 
-  int personalBest() =>
-      scores.reduce((value, element) => element > value ? element : value);
+  int personalBest() => _sortedScores.last;
 
-  List<int> personalTopThree() {
-    List<int> topScores = [];
-
-    for (int score in scores) {
-      if (topScores.length < 3)
-        topScores.add(score);
-      else
-        for (int i = 0; i < topScores.length; i++) {
-          if (score > topScores[i]) {
-            topScores[i] = score;
-            break;
-          }
-        }
-    }
-
-    topScores.sort((a, b) => b.compareTo(a));
-
-    return topScores;
-  }
+  List<int> personalTopThree() => _sortedScores.reversed.take(3).toList();
 }
